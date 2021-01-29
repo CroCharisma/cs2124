@@ -8,13 +8,13 @@ int main()
 	int n = 0;
 	char buffer[50] = "";
 	//1.  Open the file Project0.txt and read in the first line of the file to determine how many Employees we need for our array, and use malloc() to dynamically allocate an array of this size.
-	FILE *infile = fopen( "./project0.txt", "r" );
+	FILE *infile = fopen( "./project0input.txt", "r" );
 	if( infile == NULL ){
 		printf("%s", "ERROR FILE NO OPEN\n");
 		return -1;
 	}
 
-	fscanf(infile,"%s", &n );
+	fscanf(infile,"%d\n", &n );
 
 	Employee* list = (Employee*)malloc( n * sizeof( Employee ) );
 	
@@ -22,15 +22,12 @@ int main()
 	int i = 0;
 	for( i = 0; i < n; i++ ){
 		fgets( buffer, 50, infile );
-		sscanf( buffer, "%s %d %lf", list[i].name, list[i].ID, list[i].rate);
+		sscanf( buffer, "%s %d %lf", list[i].name, &(list[i].ID), &(list[i].rate));
 	}
-	
 	//3.  Loop through your array and print out the employee information.  Each employee (name, ID, hourly rate) should be on a single line.  The name should be left justified in a column of width 10. 
 	// The IDs are each 6 digits long so they can be printed with a single space after it.  The hourly rate should be printed to 2 decimal places.
 	for( i = 0; i < n; i++ ){
-		printf( "%-10s %d %.2lf", list[i].name, list[i].ID, list[i].rate);
+		printf( "%-10s %d %.2lf\n", list[i].name, list[i].ID, list[i].rate);
 	}
-
-
 	return 0;
 }
