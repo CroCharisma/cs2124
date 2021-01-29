@@ -8,7 +8,7 @@ int main()
 	int n = 0;
 	char buffer[50] = "";
 	//1.  Open the file Project0.txt and read in the first line of the file to determine how many Employees we need for our array, and use malloc() to dynamically allocate an array of this size.
-	FILE *infile = fopen( "./project0input.txt", "r" );
+	FILE *infile = fopen( "./Project0Input.txt", "r" );
 	if( infile == NULL ){
 		printf("%s", "ERROR FILE NO OPEN\n");
 		return -1;
