@@ -29,5 +29,7 @@ int main()
 	for( i = 0; i < n; i++ ){
 		printf( "%-10s %d %.2lf\n", list[i].name, list[i].ID, list[i].rate);
 	}
+
+	free( list );
 	return 0;
 }
