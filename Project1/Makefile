@@ -1,5 +1,5 @@
 # Define the machine object files for your program
-OBJECTS = abc123Project1.o Stack.o
+OBJECTS = vbr868Project1.o Stack.o
 # Define your include file
 INCLUDES = Stack.h
 
