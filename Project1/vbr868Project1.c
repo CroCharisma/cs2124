@@ -117,6 +117,7 @@ int convertToPostfix(char *infixString, char *postfixString){
 	Stack stk = newStack( 50 );
 	Stack par = newStack( 50 );
 	int out = 0;
+	int cnt = 0;
 	int i;
 	int j = 0;
 	Element e;
@@ -134,7 +135,7 @@ int convertToPostfix(char *infixString, char *postfixString){
 			push( par, e );
 		}
 
-		if( infixString[i] == ')' ){//this is broken rn idk why gl
+		if( infixString[i] == ')' ){
 			if(isEmpty(par) ){
 				freeStack(stk);
 				freeStack(par);
@@ -144,6 +145,13 @@ int convertToPostfix(char *infixString, char *postfixString){
 		}
 
 		if( infixString[i] == '+' || infixString [i] == '-' || infixString[i] == '*' || infixString[i] == '/' ){
+
+			cnt++;
+			if( i == 0 ){
+				freeStack(stk);
+				freeStack(par);
+				return 4;
+			}
 
 			while( !isEmpty(stk) && topElement(stk).operation != '(' && prec(topElement(stk).operation ) >= prec(infixString[i]) ){
 
@@ -187,6 +195,10 @@ int convertToPostfix(char *infixString, char *postfixString){
 
 	freeStack( stk );
 	freeStack( par );
+
+	if( cnt == 0 ){
+		return 3;
+	}
 	return out;
 	
 }
