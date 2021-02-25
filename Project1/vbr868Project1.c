@@ -115,6 +115,7 @@ If there is a missing operand, return 4 (for extra credit).
 int convertToPostfix(char *infixString, char *postfixString){
 
 	Stack stk = newStack( 50 );
+	Stack par = newStack( 50 );
 	int out = 0;
 	int i;
 	int j = 0;
@@ -128,9 +129,23 @@ int convertToPostfix(char *infixString, char *postfixString){
 			j++;
 
 		}
-		if( infixString[i] == '+' || infixString [i] == '-' || infixString[i] == '*' || infixString[i] == '/' || infixString[i] == '(' || infixString[i] == ')' ){
+		if( infixString[i] == '('){
+			e.operation = '(';
+			push( par, e );
+		}
 
-			while( !isEmpty(stk) && prec(topElement(stk).operation ) >= prec(infixString[i]) ){
+		if( infixString[i] == ')' ){//this is broken rn idk why gl
+			if(isEmpty(par) ){
+				freeStack(stk);
+				freeStack(par);
+				return 1;
+			}
+			else pop(par);
+		}
+
+		if( infixString[i] == '+' || infixString [i] == '-' || infixString[i] == '*' || infixString[i] == '/' ){
+
+			while( !isEmpty(stk) && topElement(stk).operation != '(' && prec(topElement(stk).operation ) >= prec(infixString[i]) ){
 
 				postfixString[j] = pop(stk).operation;
 				j++;
@@ -142,6 +157,23 @@ int convertToPostfix(char *infixString, char *postfixString){
 
 		}
 
+		if( infixString[i] == '(' ){
+			e.operation = infixString[i];
+			push(stk, e);
+		}
+
+		if( infixString[i] == ')' ){
+			while( topElement(stk).operation != '(' ){
+				postfixString[j] = pop(stk).operation;
+				j++;
+			}
+			pop(stk);
+		}
+
+	}
+
+	if( !isEmpty( par ) ){
+		out = 2;
 	}
 
 	while( !isEmpty(stk) ){
@@ -154,6 +186,7 @@ int convertToPostfix(char *infixString, char *postfixString){
 	postfixString[j] = '\0';
 
 	freeStack( stk );
+	freeStack( par );
 	return out;
 	
 }
