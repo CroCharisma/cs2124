@@ -217,6 +217,50 @@ Return an integer representing what the postfix equation evaluated to.
 ************/
 int evaluatePostfix(char *postfixString){
 
-	
+	Stack stk = newStack( 50 );
+	Element e;
+	int s;
+	int f;
+	int out;
+	int i;
+
+	for( i = 0; i < strlen( postfixString); i++){
+
+		if( isdigit( postfixString[i]) ){
+			e.operand = postfixString[i] - '0';
+			push( stk, e );
+		}
+		else{
+			switch( postfixString[i] ){
+				case '+':
+					e.operand = (pop(stk).operand + pop(stk).operand);
+					push(stk, e);
+					break;
+				case '-':
+					s = pop(stk).operand;
+					f = pop(stk).operand;
+					e.operand = f - s;
+					push(stk, e);
+					break;
+				case '*':
+					e.operand = (pop(stk).operand * pop(stk).operand);
+					push(stk, e);
+					break;
+				case '/':
+					s = pop(stk).operand;
+					f = pop(stk).operand;
+					e.operand = f / s;
+					push(stk, e);
+					break;
+			}
+				
+		}
+
+	}
+
+	out = pop(stk).operand;
+
+	freeStack(stk);
+	return out;
 
 }
