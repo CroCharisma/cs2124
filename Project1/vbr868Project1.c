@@ -1,4 +1,6 @@
 #include "Stack.h"
+#include <ctype.h>
+#include <string.h>
 
 #define MAX_LINE_LENGTH 50
 
@@ -78,6 +80,22 @@ int main()
 	return 0;
 }
 
+int prec( char op ){
+
+	if( op == '+' || op == '-' ){
+		return 1;
+	}
+	if( op == '*' || op == '/' ){
+		return 2;
+	}
+	if( op == ')' || op == '(' ){
+		return 3;
+	}
+
+	return -1;
+
+}
+
 
 /*******
 int convertToPostfix(char *infixString, char *postfixString)
@@ -96,8 +114,47 @@ If there is a missing operand, return 4 (for extra credit).
 *********/
 int convertToPostfix(char *infixString, char *postfixString){
 
+	Stack stk = newStack( 50 );
+	int out = 0;
+	int i;
+	int j = 0;
+	Element e;
 
-	
+	for( i = 0; i < strlen( infixString); i++ ){
+
+		if( isdigit(infixString[i] ) ){
+
+			postfixString[j] = infixString[i];
+			j++;
+
+		}
+		if( infixString[i] == '+' || infixString [i] == '-' || infixString[i] == '*' || infixString[i] == '/' || infixString[i] == '(' || infixString[i] == ')' ){
+
+			while( !isEmpty(stk) && prec(topElement(stk).operation ) >= prec(infixString[i]) ){
+
+				postfixString[j] = pop(stk).operation;
+				j++;
+
+			}
+
+			e.operation = infixString[i];
+			push( stk, e );
+
+		}
+
+	}
+
+	while( !isEmpty(stk) ){
+
+		postfixString[j] = pop(stk).operation;
+		j++;
+
+	}
+
+	postfixString[j] = '\0';
+
+	freeStack( stk );
+	return out;
 	
 }
 
