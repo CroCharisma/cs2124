@@ -1,7 +1,7 @@
-#dont track .o and compiled projects
+#we will need to compile everything locally anyways, so theres no reason to keep .o and .exe files
 *.o
 *.exe
 
-#we also dont want to commit the finshed projects zipped up for submission, nor will we need the instructions
+#we also dont want to commit the finshed projects zipped up for submission, nor will we need the instructions provided for either project
 *.docx
 *.zip
