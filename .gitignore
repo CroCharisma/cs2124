@@ -2,5 +2,6 @@
 *.o
 *.exe
 
-#we also dont want to commit the finshed projects zipped up for submission
+#we also dont want to commit the finshed projects zipped up for submission, nor will we need the instructions
+*.docx
 *.zip
