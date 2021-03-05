@@ -1,0 +1,6 @@
+#dont track .o and compiled projects
+*.o
+*.exe
+
+#we also dont want to commit the finshed projects zipped up for submission
+*.zip
